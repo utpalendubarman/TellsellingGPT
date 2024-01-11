@@ -32,6 +32,7 @@ testApi/
 local/
 dist/
 
+
 # hugo
 **/.hugo_build.lock
 docSite/public/
