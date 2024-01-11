@@ -1,0 +1,21 @@
+service_file=$(cat <<EOM
+[Unit]
+Description=FastGPT
+After=network.target
+
+[Service]
+ExecStart=`pwd`/start
+Restart=always
+User=$USER
+WorkingDirectory=`pwd`
+
+[Install]
+WantedBy=multi-user.target
+EOM
+)
+
+appname=myapp
+
+echo  "$service_file" | sudo tee /etc/systemd/system/$appname.service > /dev/null 2>&1
+sudo systemctl enable $appname
+sudo systemctl start $appname

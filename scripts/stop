@@ -1,0 +1,4 @@
+#!/usr/bin/bash
+
+echo Stopping...
+sudo killall next-router-wor

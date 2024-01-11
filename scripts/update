@@ -1,0 +1,32 @@
+#!/usr/bin/bash
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+cd "$SCRIPT_DIR"
+
+# check for updates
+cd ~/FastGPT
+git fetch
+if [ "$(git rev-parse HEAD)" == "$(git rev-parse @{u})" ]; then
+    echo "Nothing to update"
+    exit;
+fi
+cd ..
+
+# clone
+git clone https://github.com/utpalendubarman/FastGPT FastGPT_latest
+
+# build
+cd FastGPT_latest/projects/app
+pnpm i
+cp ~/env .env
+pnpm build
+if [ "$?" != "0" ]; then
+    echo Build Failede
+    exit
+fi
+cd ~
+
+# replace
+sudo systemctl stop myapp
+sudo rm -rf FastGPT
+mv FastGPT_latest FastGPT
+sudo systemctl start myapp
