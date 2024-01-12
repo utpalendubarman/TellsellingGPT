@@ -28,35 +28,35 @@ const Navbar = ({ unread }: { unread: number }) => {
   const navbarList = useMemo(
     () => [
       {
-        label: t('navbar.Chat'),
+        label: 'Chat',
         icon: 'core/chat/chatLight',
         activeIcon: 'chatcore/dataset/chatFillFill',
         link: `/chat?appId=${lastChatAppId}&chatId=${lastChatId}`,
         activeLink: ['/chat']
       },
       {
-        label: t('navbar.Apps'),
+        label: 'Apps',
         icon: 'core/app/aiLight',
         activeIcon: 'core/app/aiFill',
         link: `/app/list`,
         activeLink: ['/app/list', '/app/detail']
       },
       {
-        label: t('navbar.Plugin'),
+        label: 'Plugin',
         icon: 'common/navbar/pluginLight',
         activeIcon: 'common/navbar/pluginFill',
         link: `/plugin/list`,
         activeLink: ['/plugin/list', '/plugin/edit']
       },
       {
-        label: t('navbar.Datasets'),
+        label: 'Datasets',
         icon: 'core/dataset/datasetLight',
         activeIcon: 'core/dataset/datasetFill',
         link: `/dataset/list`,
         activeLink: ['/dataset/list', '/dataset/detail']
       },
       {
-        label: t('navbar.Account'),
+        label: 'Account',
         icon: 'support/user/userLight',
         activeIcon: 'support/user/userFill',
         link: '/account',
