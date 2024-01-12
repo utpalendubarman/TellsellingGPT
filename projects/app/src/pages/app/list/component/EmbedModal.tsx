@@ -52,7 +52,7 @@ const EmbedModal = ({ onClose, onSuccess }: { onClose: () => void; onSuccess: ()
             var share = result[0];
             setEmbed('http://34.42.216.243/chat/share?shareId=' + share['share']);
             setEmbedScript(
-              '<script src="http://localhost/embed/embed.js" data-type="embed" data-id="' +
+              '<script src="http://34.42.216.243/embed/embed.js" data-type="embed" data-id="' +
                 share['share'] +
                 '"></script>'
             );

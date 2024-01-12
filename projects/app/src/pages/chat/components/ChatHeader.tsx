@@ -35,7 +35,7 @@ const ChatHeader = ({
     () =>
       chatContentReplaceBlock(history[history.length - 2]?.value)?.slice(0, 8) ||
       appName ||
-      '新对话',
+      'New conversation',
     [appName, history]
   );
 
@@ -49,20 +49,13 @@ const ChatHeader = ({
     >
       {isPc ? (
         <>
-          <Box mr={3} color={'myGray.1000'}>
-            {title}
-          </Box>
-          <Tag>
-            <MyIcon name={'history'} w={'14px'} />
-            <Box ml={1}>{history.length === 0 ? 'New dialogue' : `${history.length}Records`}</Box>
-          </Tag>
           <Box mr={3} ml={2} color={'myGray.1000'}>
             {apps != undefined && apps.length != 0 ? (
               <>
                 {apps.map((app, key) => {
                   const shareLink = 'http://localhost:3000/en/chat/share?shareId=' + app.share;
                   return (
-                    <Tag>
+                    <Tag style={{ float: 'left' }} p={4} mr={2}>
                       <a style={{ marginRight: '5px' }} dataId={key} href={shareLink}>
                         {app.name}
                       </a>

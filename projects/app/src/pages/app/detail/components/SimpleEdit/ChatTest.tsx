@@ -46,7 +46,7 @@ const ChatTest = ({ appId }: { appId: string }) => {
           modules,
           variables,
           appId,
-          appName: `调试-${appDetail.name}`
+          appName: `debug-${appDetail.name}`
         },
         onMessage: generatingMessage,
         abortSignal: controller

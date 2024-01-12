@@ -52,13 +52,13 @@ const AppDetail = ({ currentTab }: { currentTab: `${TabEnum}` }) => {
 
   const tabList = useMemo(
     () => [
-      { label: '简易配置', id: TabEnum.simpleEdit, icon: 'common/overviewLight' },
+      { label: 'Simple configuration', id: TabEnum.simpleEdit, icon: 'common/overviewLight' },
       ...(feConfigs?.hide_app_flow
         ? []
-        : [{ label: '高级编排', id: TabEnum.adEdit, icon: 'common/settingLight' }]),
-      { label: '外部使用', id: TabEnum.outLink, icon: 'support/outlink/shareLight' },
-      { label: '对话日志', id: TabEnum.logs, icon: 'core/app/logsLight' },
-      { label: '立即对话', id: TabEnum.startChat, icon: 'core/chat/chatLight' }
+        : [{ label: 'High -level arrangement', id: TabEnum.adEdit, icon: 'common/settingLight' }]),
+      { label: 'External use', id: TabEnum.outLink, icon: 'support/outlink/shareLight' },
+      { label: 'Logs', id: TabEnum.logs, icon: 'core/app/logsLight' },
+      { label: 'Dialog', id: TabEnum.startChat, icon: 'core/chat/chatLight' }
     ],
     []
   );
@@ -68,7 +68,8 @@ const AppDetail = ({ currentTab }: { currentTab: `${TabEnum}` }) => {
       process.env.NODE_ENV === 'production'
         ? (e: any) => {
             e.preventDefault();
-            e.returnValue = '内容已修改，确认离开页面吗？';
+            e.returnValue =
+              'The content has been modified, do you confirm that you leave the page?';
           }
         : () => {};
     window.addEventListener('beforeunload', listen);
@@ -82,7 +83,7 @@ const AppDetail = ({ currentTab }: { currentTab: `${TabEnum}` }) => {
   useQuery([appId], () => loadAppDetail(appId, true), {
     onError(err: any) {
       toast({
-        title: err?.message || '获取应用异常',
+        title: err?.message || 'Obtain abnormal application',
         status: 'error'
       });
       router.replace('/app/list');
@@ -146,7 +147,7 @@ const AppDetail = ({ currentTab }: { currentTab: `${TabEnum}` }) => {
                 borderRadius={'50%'}
                 aria-label={''}
               />
-              我的应用
+              My Applications
             </Flex>
           </Box>
           {/* phone tab */}
