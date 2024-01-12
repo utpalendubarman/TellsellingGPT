@@ -28,6 +28,7 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 platform.json
+package.json*
 testApi/
 local/
 dist/
@@ -39,3 +40,4 @@ docSite/public/
 docSite/resources/_gen/
 docSite/.vercel
 *.local.*
+projects/app/package.json

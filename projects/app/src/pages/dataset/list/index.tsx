@@ -144,7 +144,7 @@ const Kb = () => {
             <Flex flex={1} alignItems={'center'}>
               <Image src={'/imgs/module/db.png'} alt={''} mr={2} h={'24px'} />
               <Box className="textlg" letterSpacing={1} fontSize={'24px'} fontWeight={'bold'}>
-                {t('core.dataset.My Dataset')}
+                My Dataset
               </Box>
             </Flex>
           }
@@ -166,7 +166,7 @@ const Kb = () => {
                 <MenuButton h={'100%'}>
                   <Flex alignItems={'center'} px={'20px'}>
                     <AddIcon mr={2} />
-                    <Box>{t('Create New')}</Box>
+                    <Box>Create New</Box>
                   </Flex>
                 </MenuButton>
               </Button>

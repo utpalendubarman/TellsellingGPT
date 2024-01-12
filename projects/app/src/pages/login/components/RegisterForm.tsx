@@ -60,7 +60,7 @@ const RegisterForm = ({ setPageType, loginSuccess }: Props) => {
           })
         );
         toast({
-          title: `注册成功`,
+          title: `registration success`,
           status: 'success'
         });
         // auto register template app
@@ -76,7 +76,7 @@ const RegisterForm = ({ setPageType, loginSuccess }: Props) => {
         }, 100);
       } catch (error: any) {
         toast({
-          title: error.message || '注册异常',
+          title: error.message || 'Registered abnormalities',
           status: 'error'
         });
       }
@@ -88,7 +88,7 @@ const RegisterForm = ({ setPageType, loginSuccess }: Props) => {
   return (
     <>
       <Box fontWeight={'bold'} fontSize={'2xl'} textAlign={'center'}>
-        注册 {feConfigs?.systemTitle} 账号
+        Create an account
       </Box>
       <Box
         mt={'42px'}
@@ -101,13 +101,13 @@ const RegisterForm = ({ setPageType, loginSuccess }: Props) => {
         <FormControl isInvalid={!!errors.username}>
           <Input
             bg={'myGray.50'}
-            placeholder="邮箱/手机号"
+            placeholder="Mailbox/mobile phone number"
             {...register('username', {
-              required: '邮箱/手机号不能为空',
+              required: 'The mailbox/mobile phone number cannot be empty',
               pattern: {
                 value:
                   /(^1[3456789]\d{9}$)|(^[A-Za-z0-9]+([_\.][A-Za-z0-9]+)*@([A-Za-z0-9\-]+\.)+[A-Za-z]{2,6}$)/,
-                message: '邮箱/手机号格式错误'
+                message: 'Email/mobile phone number format error'
               }
             })}
           ></Input>
@@ -123,9 +123,9 @@ const RegisterForm = ({ setPageType, loginSuccess }: Props) => {
             bg={'myGray.50'}
             flex={1}
             maxLength={8}
-            placeholder="验证码"
+            placeholder="Verification code"
             {...register('code', {
-              required: '验证码不能为空'
+              required: 'verification code must be filled'
             })}
           ></Input>
           <Box
@@ -143,23 +143,23 @@ const RegisterForm = ({ setPageType, loginSuccess }: Props) => {
                   onClick: onclickSendCode
                 })}
           >
-            {sendCodeText}
+            Send Code
           </Box>
         </FormControl>
         <FormControl mt={6} isInvalid={!!errors.password}>
           <Input
             bg={'myGray.50'}
             type={'password'}
-            placeholder="密码(4~20位)"
+            placeholder="Password (4 ~ 20 digits)"
             {...register('password', {
-              required: '密码不能为空',
+              required: 'password can not be blank',
               minLength: {
                 value: 4,
-                message: '密码最少 4 位最多 20 位'
+                message: 'At least 4 digits of passwords up to 20 digits'
               },
               maxLength: {
                 value: 20,
-                message: '密码最少 4 位最多 20 位'
+                message: 'At least 4 digits of passwords up to 20 digits'
               }
             })}
           ></Input>
@@ -168,9 +168,10 @@ const RegisterForm = ({ setPageType, loginSuccess }: Props) => {
           <Input
             bg={'myGray.50'}
             type={'password'}
-            placeholder="确认密码"
+            placeholder="Confirm Password"
             {...register('password2', {
-              validate: (val) => (getValues('password') === val ? true : '两次密码不一致')
+              validate: (val) =>
+                getValues('password') === val ? true : 'Two passwords are inconsistent'
             })}
           ></Input>
         </FormControl>
@@ -183,7 +184,7 @@ const RegisterForm = ({ setPageType, loginSuccess }: Props) => {
           isLoading={requesting}
           onClick={handleSubmit(onclickRegister)}
         >
-          确认注册
+          Confirm the registration
         </Button>
         <Box
           float={'right'}
@@ -195,7 +196,7 @@ const RegisterForm = ({ setPageType, loginSuccess }: Props) => {
           _hover={{ textDecoration: 'underline' }}
           onClick={() => setPageType('login')}
         >
-          已有账号，去登录
+          Existing account, log in
         </Box>
       </Box>
     </>

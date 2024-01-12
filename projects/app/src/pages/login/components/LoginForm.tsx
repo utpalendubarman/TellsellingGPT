@@ -63,12 +63,12 @@ const LoginForm = ({ setPageType, loginSuccess }: Props) => {
           })
         );
         toast({
-          title: '登录成功',
+          title: 'login successful',
           status: 'success'
         });
       } catch (error: any) {
         toast({
-          title: error.message || '登录异常',
+          title: error.message || 'Login abnormal',
           status: 'error'
         });
       }
@@ -108,20 +108,8 @@ const LoginForm = ({ setPageType, loginSuccess }: Props) => {
   return (
     <Flex flexDirection={'column'} h={'100%'}>
       <Flex alignItems={'center'}>
-        <Flex
-          w={['48px', '56px']}
-          h={['48px', '56px']}
-          bg={'myGray.25'}
-          borderRadius={'xl'}
-          borderWidth={'1.5px'}
-          borderColor={theme.borderColor.borderColor}
-          alignItems={'center'}
-          justifyContent={'center'}
-        >
-          <Avatar src={LOGO_ICON} w={'30px'} />
-        </Flex>
         <Box ml={3} fontSize={['2xl', '3xl']} fontWeight={'bold'}>
-          {feConfigs?.systemTitle}
+          TellsellingGPT
         </Box>
       </Flex>
       <Box
@@ -135,9 +123,13 @@ const LoginForm = ({ setPageType, loginSuccess }: Props) => {
         <FormControl isInvalid={!!errors.username}>
           <Input
             bg={'myGray.50'}
-            placeholder={isCommunityVersion ? '使用root用户登录' : '邮箱/手机号/用户名'}
+            placeholder={
+              isCommunityVersion
+                ? 'Log in to use root user'
+                : 'Mailbox/mobile phone number/username'
+            }
             {...register('username', {
-              required: '邮箱/手机号/用户名不能为空'
+              required: 'Mailbox/mobile phone number/user name cannot be empty'
             })}
           ></Input>
         </FormControl>
@@ -145,28 +137,20 @@ const LoginForm = ({ setPageType, loginSuccess }: Props) => {
           <Input
             bg={'myGray.50'}
             type={'password'}
-            placeholder={isCommunityVersion ? 'root密码为你设置的环境变量' : '密码'}
+            placeholder={
+              isCommunityVersion
+                ? 'The environment variable set by the root password for you'
+                : 'password'
+            }
             {...register('password', {
-              required: '密码不能为空',
+              required: 'password can not be blank',
               maxLength: {
                 value: 20,
-                message: '密码最多 20 位'
+                message: 'Password up to 20 digits'
               }
             })}
           ></Input>
         </FormControl>
-        {feConfigs?.docUrl && (
-          <Box mt={7} fontSize={'sm'}>
-            使用即代表你同意我们的{' '}
-            <Link
-              href={getDocPath('/docs/agreement/disclaimer/')}
-              target={'_blank'}
-              color={'primary.500'}
-            >
-              免责声明
-            </Link>
-          </Box>
-        )}
 
         <Button
           type="submit"
@@ -177,32 +161,32 @@ const LoginForm = ({ setPageType, loginSuccess }: Props) => {
           isLoading={requesting}
           onClick={handleSubmit(onclickLogin)}
         >
-          {t('home.Login')}
+          Login
         </Button>
 
-        {feConfigs?.show_register && (
-          <>
-            <Flex align={'center'} justifyContent={'flex-end'} color={'primary.700'}>
-              <Box
-                cursor={'pointer'}
-                _hover={{ textDecoration: 'underline' }}
-                onClick={() => setPageType('forgetPassword')}
-                fontSize="sm"
-              >
-                忘记密码?
-              </Box>
-              <Box mx={3} h={'16px'} w={'1.5px'} bg={'myGray.250'}></Box>
-              <Box
-                cursor={'pointer'}
-                _hover={{ textDecoration: 'underline' }}
-                onClick={() => setPageType('register')}
-                fontSize="sm"
-              >
-                注册账号
-              </Box>
-            </Flex>
-          </>
-        )}
+        {/*feConfigs?.show_register && (*/}
+        <>
+          <Flex align={'center'} justifyContent={'flex-end'} color={'primary.700'}>
+            <Box
+              cursor={'pointer'}
+              _hover={{ textDecoration: 'underline' }}
+              onClick={() => setPageType('forgetPassword')}
+              fontSize="sm"
+            >
+              forget the password?
+            </Box>
+            <Box mx={3} h={'16px'} w={'1.5px'} bg={'myGray.250'}></Box>
+            <Box
+              cursor={'pointer'}
+              _hover={{ textDecoration: 'underline' }}
+              onClick={() => setPageType('register')}
+              fontSize="sm"
+            >
+              Register an account
+            </Box>
+          </Flex>
+        </>
+        {/**/}
       </Box>
       <Box flex={1} />
       {/* oauth */}
