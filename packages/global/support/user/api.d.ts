@@ -6,6 +6,12 @@ export type PostLoginProps = {
   tmbId?: string;
 };
 
+export type PostRegisterByEmail = {
+  email: string;
+  password: string;
+  name: string;
+};
+
 export type OauthLoginProps = {
   type: `${OAuthEnum}`;
   code: string;

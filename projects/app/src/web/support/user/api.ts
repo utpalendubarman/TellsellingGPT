@@ -9,6 +9,7 @@ import type {
   OauthLoginProps,
   PostLoginProps
 } from '@fastgpt/global/support/user/api.d';
+import { BrandingType } from '@fastgpt/global/support/branding/branding';
 
 export const sendAuthCode = (data: {
   username: string;
@@ -24,20 +25,20 @@ export const postFastLogin = (params: FastLoginProps) =>
   POST<ResLogin>('/plusApi/support/user/account/login/fastLogin', params);
 
 export const postRegister = ({
+  email,
+  name,
   username,
-  password,
-  code,
-  inviterId
+  password
 }: {
+  email: string;
+  name: string;
   username: string;
-  code: string;
   password: string;
-  inviterId?: string;
 }) =>
-  POST<ResLogin>(`/plusApi/support/user/account/register/emailAndPhone`, {
+  POST<ResLogin>(`/support/user/account/registration`, {
+    email,
+    name,
     username,
-    code,
-    inviterId,
     password: hashStr(password)
   });
 
@@ -76,3 +77,31 @@ export const putUserInfo = (data: UserUpdateParams) => PUT('/support/user/accoun
 export const checkTeamExportDatasetLimit = (datasetId: string) =>
   GET(`/support/user/team/limit/exportDatasetLimit`, { datasetId });
 export const checkTeamWebSyncLimit = () => GET(`/support/user/team/limit/webSyncLimit`);
+
+export const updateBranding = ({
+  userid,
+  font,
+  logo,
+  primarycolor,
+  secondarycolor,
+  tertiarycolor,
+  quarternarycolor
+}: {
+  userid: string;
+  font: string;
+  logo: string;
+  primarycolor: string;
+  secondarycolor: string;
+  tertiarycolor: string;
+  quarternarycolor: string;
+}) => {
+  POST<BrandingType>('/support/user/account/branding', {
+    userid,
+    font,
+    logo,
+    primarycolor,
+    secondarycolor,
+    tertiarycolor,
+    quarternarycolor
+  });
+};

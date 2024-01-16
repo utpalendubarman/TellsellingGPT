@@ -41,7 +41,7 @@ function App({ Component, pageProps }: AppProps) {
   const { i18n } = useTranslation();
   const { loadGitStar } = useSystemStore();
   const [scripts, setScripts] = useState<FastGPTFeConfigsType['scripts']>([]);
-  const [title, setTitle] = useState(process.env.SYSTEM_NAME || 'AI');
+  const [title, setTitle] = useState('TellsellingGPT');
 
   useEffect(() => {
     // get init data
@@ -50,7 +50,7 @@ function App({ Component, pageProps }: AppProps) {
         feConfigs: { scripts, isPlus, show_git, systemTitle }
       } = await clientInitData();
 
-      setTitle(systemTitle || 'FastGPT');
+      setTitle(systemTitle || 'TellsellingGPT');
 
       // log fastgpt
       if (!isPlus) {

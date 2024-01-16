@@ -42,13 +42,6 @@ const Navbar = ({ unread }: { unread: number }) => {
         activeLink: ['/app/list', '/app/detail']
       },
       {
-        label: 'Plugin',
-        icon: 'common/navbar/pluginLight',
-        activeIcon: 'common/navbar/pluginFill',
-        link: `/plugin/list`,
-        activeLink: ['/plugin/list', '/plugin/edit']
-      },
-      {
         label: 'Datasets',
         icon: 'core/dataset/datasetLight',
         activeIcon: 'core/dataset/datasetFill',
@@ -156,33 +149,6 @@ const Navbar = ({ unread }: { unread: number }) => {
             </Badge>
           </Link>
         </Box>
-      )}
-      {(feConfigs?.docUrl || feConfigs?.chatbotUrl) && (
-        <MyTooltip label={t('common.system.Use Helper')} placement={'right-end'}>
-          <Link
-            {...itemStyles}
-            href={feConfigs?.chatbotUrl || getDocPath('/docs/intro')}
-            target="_blank"
-            mb={0}
-            color={'#9096a5'}
-          >
-            <MyIcon name={'common/courseLight'} width={'26px'} height={'26px'} />
-          </Link>
-        </MyTooltip>
-      )}
-      {feConfigs?.show_git && (
-        <MyTooltip label={`Git Star: ${gitStar}`} placement={'right-end'}>
-          <Link
-            as={NextLink}
-            href="https://github.com/labring/FastGPT"
-            target={'_blank'}
-            {...itemStyles}
-            mt={0}
-            color={'#9096a5'}
-          >
-            <MyIcon name={'common/gitLight'} width={'22px'} height={'22px'} />
-          </Link>
-        </MyTooltip>
       )}
     </Flex>
   );

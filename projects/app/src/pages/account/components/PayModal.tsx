@@ -8,6 +8,8 @@ import { getErrText } from '@fastgpt/global/common/error/utils';
 import { useTranslation } from 'next-i18next';
 import Markdown from '@/components/Markdown';
 import MyModal from '@/components/MyModal';
+import { loadStripe } from '@stripe/stripe-js';
+import { PaymentElement, Elements, useStripe, useElements } from '@stripe/react-stripe-js';
 
 const PayModal = ({ onClose }: { onClose: () => void }) => {
   const router = useRouter();
@@ -17,21 +19,66 @@ const PayModal = ({ onClose }: { onClose: () => void }) => {
   const [loading, setLoading] = useState(false);
   const [payId, setPayId] = useState('');
 
+  const stripe = useStripe();
+  const elements = useElements();
+
+  const [errorMessage, setErrorMessage] = useState(null);
+
   const handleClickPay = useCallback(async () => {
     if (!inputVal || inputVal <= 0 || isNaN(+inputVal)) return;
     setLoading(true);
     try {
       // 获取支付二维码
-      const res = await getPayCode(inputVal);
-      new window.QRCode(document.getElementById('payQRCode'), {
-        text: res.codeUrl,
-        width: 128,
-        height: 128,
-        colorDark: '#000000',
-        colorLight: '#ffffff',
-        correctLevel: window.QRCode.CorrectLevel.H
+      if (elements == null) {
+        return;
+      }
+
+      // Trigger form validation and wallet collection
+      const { error: submitError } = await elements.submit();
+      if (submitError) {
+        // Show error to your customer
+        setErrorMessage(submitError.message);
+        return;
+      }
+
+      const stripePromise = loadStripe('pk_test_6pRNASCoBOKtIshFeQd4XMUh');
+
+      const options = {
+        mode: 'payment',
+        amount: 1099,
+        currency: 'usd',
+        // Fully customizable with appearance API.
+        appearance: {
+          /*...*/
+        }
+      };
+
+      // Create the PaymentIntent and obtain clientSecret from your server endpoint
+      const res = await fetch('/create-intent', {
+        method: 'POST'
       });
-      setPayId(res.payId);
+
+      const { client_secret: clientSecret } = await res.json();
+
+      const { error } = await stripe.confirmPayment({
+        //`Elements` instance that was used to create the Payment Element
+        elements,
+        clientSecret,
+        confirmParams: {
+          return_url: 'https://example.com/order/123/complete'
+        }
+      });
+
+      if (error) {
+        // This point will only be reached if there is an immediate error when
+        // confirming the payment. Show error to your customer (for example, payment
+        // details incomplete)
+        setErrorMessage(error.message);
+      } else {
+        // Your customer will be redirected to your `return_url`. For some payment
+        // methods like iDEAL, your customer will be redirected to an intermediate
+        // site first to authorize the payment, then redirected to the `return_url`.
+      }
     } catch (err) {
       toast({
         title: getErrText(err),
@@ -82,12 +129,13 @@ const PayModal = ({ onClose }: { onClose: () => void }) => {
                 </Button>
               ))}
             </Grid>
+            <PaymentElement />
             <Box px={6}>
               <Input
                 value={inputVal}
                 type={'number'}
                 step={1}
-                placeholder={'其他金额，请取整数'}
+                placeholder={'For other amounts, please take an integer'}
                 onChange={(e) => {
                   setInputVal(Math.floor(+e.target.value));
                 }}
@@ -97,7 +145,7 @@ const PayModal = ({ onClose }: { onClose: () => void }) => {
         )}
         {/* 付费二维码 */}
         <Box textAlign={'center'}>
-          {payId && <Box mb={3}>请微信扫码支付: {inputVal}元，请勿关闭页面</Box>}
+          {payId && <Box mb={3}>Please pay for WeChat code to pay: {inputVal}元，请勿关闭页面</Box>}
           <Box id={'payQRCode'} display={'inline-block'}></Box>
         </Box>
       </ModalBody>
@@ -114,7 +162,7 @@ const PayModal = ({ onClose }: { onClose: () => void }) => {
               isDisabled={!inputVal || inputVal === 0}
               onClick={handleClickPay}
             >
-              获取充值二维码
+              Get the recharge QR code
             </Button>
           </>
         )}

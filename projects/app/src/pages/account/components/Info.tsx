@@ -34,7 +34,7 @@ import { putUpdateMemberName } from '@/web/support/user/team/api';
 import { getDocPath } from '@/web/common/system/doc';
 
 const TeamMenu = dynamic(() => import('@/components/support/user/team/TeamMenu'));
-const PayModal = dynamic(() => import('./PayModal'), {
+const BuyTokenModal = dynamic(() => import('./BuyTokenModal'), {
   loading: () => <Loading fixed={false} />,
   ssr: false
 });
@@ -59,9 +59,9 @@ const UserInfo = () => {
 
   const { toast } = useToast();
   const {
-    isOpen: isOpenPayModal,
-    onClose: onClosePayModal,
-    onOpen: onOpenPayModal
+    isOpen: isOpenBuyTokenModal,
+    onClose: onCloseBuyTokenModal,
+    onOpen: onOpenBuyTokenModal
   } = useDisclosure();
   const {
     isOpen: isOpenUpdatePsw,
@@ -241,11 +241,9 @@ const UserInfo = () => {
             <Box flex={1}>
               <strong>{formatStorePrice2Read(userInfo?.team?.balance).toFixed(3)}</strong> 元
             </Box>
-            {feConfigs?.show_pay && userInfo?.team?.canWrite && (
-              <Button size={['sm', 'md']} ml={5} onClick={onOpenPayModal}>
-                {t('user.Pay')}
-              </Button>
-            )}
+            <Button size={['sm', 'md']} ml={5} onClick={onOpenBuyTokenModal}>
+              {t('user.Pay')}
+            </Button>
           </Flex>
         </Box>
         {feConfigs?.docUrl && (
@@ -330,7 +328,7 @@ const UserInfo = () => {
         )}
       </Box>
 
-      {isOpenPayModal && <PayModal onClose={onClosePayModal} />}
+      {isOpenBuyTokenModal && <BuyTokenModal onClose={onCloseBuyTokenModal} />}
       {isOpenUpdatePsw && <UpdatePswModal onClose={onCloseUpdatePsw} />}
       {isOpenOpenai && userInfo && (
         <OpenAIAccountModal

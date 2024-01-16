@@ -9,6 +9,7 @@ export function strIsLink(str?: string) {
 
 /* hash string */
 export const hashStr = (str: string) => {
+  console.log(crypto.createHash('sha256').update(str).digest('hex'));
   return crypto.createHash('sha256').update(str).digest('hex');
 };
 

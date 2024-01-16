@@ -24,11 +24,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       'status'
     );
     if (!authCert) {
-      throw new Error('用户未注册');
+      throw new Error('User is not registered');
     }
 
     if (authCert.status === UserStatusEnum.forbidden) {
-      throw new Error('账号已停用，无法登录');
+      throw new Error('The account has been stopped and cannot be logged in');
     }
 
     const user = await MongoUser.findOne({
@@ -37,7 +37,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     });
 
     if (!user) {
-      throw new Error('密码错误');
+      throw new Error('wrong password');
     }
 
     const userDetail = await getUserDetail({ tmbId, userId: user._id });

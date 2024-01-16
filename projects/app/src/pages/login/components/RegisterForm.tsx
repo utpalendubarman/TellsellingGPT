@@ -19,7 +19,7 @@ interface RegisterType {
   username: string;
   password: string;
   password2: string;
-  code: string;
+  email: string;
 }
 
 const RegisterForm = ({ setPageType, loginSuccess }: Props) => {
@@ -36,30 +36,21 @@ const RegisterForm = ({ setPageType, loginSuccess }: Props) => {
 
   const { sendCodeText, sendCode, codeCountDown } = useSendCode();
 
-  const onclickSendCode = useCallback(async () => {
-    const check = await trigger('username');
-    if (!check) return;
-    sendCode({
-      username: getValues('username'),
-      type: 'register'
-    });
-  }, [getValues, sendCode, trigger]);
-
   const [requesting, setRequesting] = useState(false);
 
   const onclickRegister = useCallback(
-    async ({ username, password, code }: RegisterType) => {
+    async ({ username, password }: RegisterType) => {
       setRequesting(true);
       try {
         loginSuccess(
           await postRegister({
-            username,
-            code,
-            password,
-            inviterId: localStorage.getItem('inviterId') || undefined
+            email: username,
+            name: 'Utpal',
+            password
           })
         );
-        toast({
+
+        /* toast({
           title: `registration success`,
           status: 'success'
         });
@@ -73,7 +64,7 @@ const RegisterForm = ({ setPageType, loginSuccess }: Props) => {
               type: template.type
             });
           });
-        }, 100);
+        }, 100);*/
       } catch (error: any) {
         toast({
           title: error.message || 'Registered abnormalities',
@@ -112,6 +103,7 @@ const RegisterForm = ({ setPageType, loginSuccess }: Props) => {
             })}
           ></Input>
         </FormControl>
+        {/*
         <FormControl
           mt={6}
           isInvalid={!!errors.code}
@@ -145,7 +137,7 @@ const RegisterForm = ({ setPageType, loginSuccess }: Props) => {
           >
             Send Code
           </Box>
-        </FormControl>
+              </FormControl>*/}
         <FormControl mt={6} isInvalid={!!errors.password}>
           <Input
             bg={'myGray.50'}
